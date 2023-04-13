@@ -16,6 +16,14 @@ class ACTOR_IDENTIFIER_API AActor_IdentifierGameModeBase : public AGameModeBase
 	
 protected:
 	virtual void BeginPlay() override;
-	// virtual void BeginDestroy() override;
+	virtual void BeginDestroy() override;
 	// virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	virtual void OnConstruction(const FTransform& Transform) override;
+
+	void SaveGameInstance();
+	void LoadGameInstance();
+
+private:
+	//UPROPERTY(BlueprintReadWrite, Category = "IDSystem")
+	class UIDSystemSave* CurrentSave;
 };

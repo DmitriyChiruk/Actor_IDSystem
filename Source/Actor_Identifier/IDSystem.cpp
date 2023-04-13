@@ -24,7 +24,10 @@ void UIDSystem::SetID(int32& newID) {
 	
 	// Find Text attached to current actor and change it`s content to newID
 	TArray<AActor*> Children;
-	GetOwner()->GetAllChildActors(Children);
+
+	// Here was a mistake: I had to check ATTACHED actors, instead of CHILD
+	GetOwner()->GetAttachedActors(Children);
+	//GetOwner()->GetAllChildActors(Children);
 	for (auto Element : Children) {
 		ATextRenderActor* Text = Cast<ATextRenderActor>(Element);
 
@@ -61,7 +64,10 @@ void UIDSystem::BeginPlay()
 		Text->GetTextRender()->SetText(FText::FromString(FString::FromInt(ID)));
 		Text->GetTextRender()->SetTextRenderColor(FColor::Black);
 		Text->SetActorScale3D(FVector(1.f, 1.f, 1.f));
-		Text->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+
+		// Here was a mistake: I had to attach it to the actor, not to the component
+		Text->AttachToActor(GetOwner(), FAttachmentTransformRules::KeepRelativeTransform);
+		//Text->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	// ...

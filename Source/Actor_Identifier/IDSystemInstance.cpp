@@ -28,6 +28,12 @@ void UIDSystemInstance::Load() {
 }
 
 void UIDSystemInstance::Save() {
+	// Get already saved actors
+	/*
+	TArray<AActor*> ActorsSaved;
+	IdentifiedActors.GenerateValueArray(ActorsSaved);
+	*/
+
 	// Find all actors
 	TArray<AActor*> ActorsToFind;
 	if (UWorld* World = GetWorld())
@@ -46,6 +52,13 @@ void UIDSystemInstance::Save() {
 
 		if (IDComponent && IDComponent->IsIdentified())
 		{
+			// Check if we already saved current actor.
+			/*
+			if (ActorsSaved.Find(Actor) == INDEX_NONE) {
+				continue;
+			}
+			*/
+
 			UE_LOG(LogTemp, Display, TEXT("\n\n\n IDSystem found!!!\n\n\n"));
 
 			int32 newID = IDComponent->GetID();
