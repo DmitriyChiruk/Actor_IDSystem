@@ -21,7 +21,9 @@ void UIDSystemInstance::Load() {
 		UIDSystem* IDComponent = Actor->FindComponentByClass<UIDSystem>();
 		if (IDComponent)
 		{
-			IDComponent->MarkAsIdentified();
+			if (IDComponent->IsIdentified()) {
+				IDComponent->MarkAsIdentified();
+			}
 			IDComponent->SetID(ID);
 		}
 	}
@@ -29,10 +31,12 @@ void UIDSystemInstance::Load() {
 
 void UIDSystemInstance::Save() {
 	// Get already saved actors
-	/*
 	TArray<AActor*> ActorsSaved;
 	IdentifiedActors.GenerateValueArray(ActorsSaved);
-	*/
+
+	if (IdentifiedActors.Num() == 0) {
+		UE_LOG(LogTemp, Display, TEXT("\n\n\n IdentifiedActors is empty.\n\n\n"));
+	}
 
 	// Find all actors
 	TArray<AActor*> ActorsToFind;
@@ -53,11 +57,10 @@ void UIDSystemInstance::Save() {
 		if (IDComponent && IDComponent->IsIdentified())
 		{
 			// Check if we already saved current actor.
-			/*
-			if (ActorsSaved.Find(Actor) == INDEX_NONE) {
+			if (ActorsSaved.Find(Actor) != INDEX_NONE && IdentifiedActors.Num() != 0) {
+				// UE_LOG(LogTemp, Display, TEXT("\n\n\nCurrent actor is in Map so we skip it\n\n\n"));
 				continue;
 			}
-			*/
 
 			UE_LOG(LogTemp, Display, TEXT("\n\n\n IDSystem found!!!\n\n\n"));
 

@@ -15,6 +15,6 @@ class ACTOR_IDENTIFIER_API UIDSystemSave : public USaveGame
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere, Category = "IDSystem")
-	class UIDSystemInstance* GameInstance;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "IDSystem")
+	TMap<int32, AActor*> IdentifiedActors;
 };

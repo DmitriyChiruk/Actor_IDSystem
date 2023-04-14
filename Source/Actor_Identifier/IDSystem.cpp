@@ -27,11 +27,10 @@ void UIDSystem::SetID(int32& newID) {
 
 	// Here was a mistake: I had to check ATTACHED actors, instead of CHILD
 	GetOwner()->GetAttachedActors(Children);
-	//GetOwner()->GetAllChildActors(Children);
 	for (auto Element : Children) {
 		ATextRenderActor* Text = Cast<ATextRenderActor>(Element);
 
-		if (Text) {
+		if (Text && IsIdentified()) {
 			UE_LOG(LogTemp, Display, TEXT("TextRenderActor text changing"));
 			Text->GetTextRender()->SetText(FText::FromString(FString::FromInt(ID)));
 		}
@@ -67,7 +66,6 @@ void UIDSystem::BeginPlay()
 
 		// Here was a mistake: I had to attach it to the actor, not to the component
 		Text->AttachToActor(GetOwner(), FAttachmentTransformRules::KeepRelativeTransform);
-		//Text->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
 	// ...
